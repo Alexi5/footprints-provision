@@ -55,6 +55,11 @@ resource "aws_lb_target_group" "blue_elb_target_group" {
   target_type = "instance"
   vpc_id      = "${aws_vpc.blue_green_vpc.id}"
 
+  health_check {
+    port = 80
+    matcher = "200,301,302"
+  }
+
   tags {
     Name = "blue-elb-target-group"
   }
@@ -75,6 +80,11 @@ resource "aws_lb_target_group" "green_elb_target_group" {
   protocol    = "HTTP"
   target_type = "instance"
   vpc_id      = "${aws_vpc.blue_green_vpc.id}"
+
+  health_check {
+    port = 80
+    matcher = "200,301,302"
+  }
 
   tags {
     Name = "green-elb-target-group"
