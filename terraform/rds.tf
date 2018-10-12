@@ -1,5 +1,5 @@
 resource "aws_db_instance" "footprints" {
-  identifier           = "footprints-db-blue-green"
+  identifier           = "footprints"
   allocated_storage    = 20
   storage_type         = "gp2"
   engine               = "mysql"
@@ -19,13 +19,13 @@ resource "aws_db_instance" "footprints" {
 
   # Prevent deletion of the database on Terraform teardown
   deletion_protection       = true
-  final_snapshot_identifier = "footprints-db-blue-green-final-snapshot"
+  final_snapshot_identifier = "footprints-db-final-snapshot"
   copy_tags_to_snapshot     = true
 
   vpc_security_group_ids = ["${aws_security_group.footprints_db_security_group.id}"]
 
   tags {
-    Name = "footprints_db_blue_green"
+    Name = "footprints_db"
   }
 
   depends_on = [
