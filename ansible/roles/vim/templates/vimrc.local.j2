@@ -1,0 +1,44 @@
+set nocompatible
+set directory=~/.vim/tmp
+set backupdir=~/.vim/backup
+set showcmd           " Show incomplete commands
+set laststatus=2
+set bs=2
+set encoding=utf8
+set termencoding=utf8 " Set terminal encoding to UTF8
+set synmaxcol=200     " Stop highlighting syntax after the 200th column
+set tabstop=4
+set sw=4
+set relativenumber
+set number
+set ruler
+set colorcolumn=80
+
+filetype off    " Required
+
+filetype plugin indent on " Required
+
+" Configure filtypes
+autocmd FileType cucumber setlocal shiftwidth=2 tabstop=2
+autocmd FileType go setlocal shiftwidth=4 tabstop=4
+autocmd FileType php setlocal tabstop=4 shiftwidth=4 expandtab
+autocmd FileType json setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
+autocmd FileType sass setlocal shiftwidth=4 tabstop=4
+autocmd FileType scss setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType html.handlebars setlocal shiftwidth=4 tabstop=4
+autocmd FileType ruby setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FileType php setlocal shiftwidth=4 tabstop=4 expandtab
+
+autocmd BufNewFile,BufReadPost Vagrantfile set syntax=ruby
+
+" Color scheme (terminal)
+set t_Co=256
+syntax enable
+let g:solarized_termtrans = 1                                                   
+let g:solarized_termcolors=256
+let g:solarized_visibility = "normal"
+let g:solarized_contrast = "normal"                                                
+set background=dark
+colorscheme solarized

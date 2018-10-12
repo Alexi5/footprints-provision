@@ -1,0 +1,41 @@
+---
+# Install nginx
+
+- name: Install nginx
+  apt: name=nginx state=present
+
+- name: Remove the default nginx site configuration
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: restart nginx
+
+- name: Create directory for the footprints app
+  file:
+    path: /var/www/footprints
+    state: directory
+    owner: deployer
+
+- name: Create directory for the shared files for the footprints app
+  file:
+    path: /var/www/footprints/shared
+    state: directory
+    owner: deployer
+
+- name: Create directory for the shared config files for the footprints app
+  file:
+    path: /var/www/footprints/shared/config
+    state: directory
+    owner: deployer
+
+- name: Add the nginx configuration
+  template: src=footprints.j2 dest=/etc/nginx/sites-enabled/footprints
+  notify: restart nginx
+
+- name: Add the database configuration
+  template: src=database.yml.j2 dest=/var/www/footprints/shared/config/database.yml
+  notify: restart nginx
+
+- name: Add the mailer configuration
+  template: src=mailer.yml.j2 dest=/var/www/footprints/shared/config/mailer.yml
+  notify: restart nginx

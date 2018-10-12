@@ -1,0 +1,21 @@
+---
+- name: deployer user, UFW, NTP, Vim, MySQL, Ruby, and Nginx
+  hosts: all
+  remote_user: ubuntu
+  become: yes
+
+  roles:
+    - common
+    - users
+    - nginx
+    - mysql
+    - vim
+    - { role: rvm_io.ruby,
+        tags: ruby,
+        become: yes,
+
+        rvm1_rubies: ['ruby-2.1.5'],
+        rvm1_install_flags: '--auto-dotfiles', # Remove --user-install from defaults
+        rvm1_install_path: /usr/local/rvm,     # Set to system location
+        rvm1_user: root                        # Need root account to access system location
+    }

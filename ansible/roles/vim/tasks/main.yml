@@ -1,0 +1,18 @@
+---
+# Install vim
+
+- name: Install vim
+  apt: name=vim state=present
+
+- name: Configure vim
+  template: src=vimrc.local.j2 dest=/etc/vim/vimrc.local
+
+- name: Create home for vim colors
+  file:
+    path: /etc/vim/colors
+    state: directory
+
+- name: Get solarized theme
+  copy:
+    src: solarized.vim
+    dest: /usr/share/vim/vim74/colors/solarized.vim

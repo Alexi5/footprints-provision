@@ -1,0 +1,8 @@
+---
+# Installs the MySQL client
+
+- name: Install the MySQL client
+  apt: name=mysql-client state=present
+
+- name: Install MySQL libraries
+  apt: name=libmysqlclient-dev state=present
