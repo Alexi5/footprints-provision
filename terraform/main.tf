@@ -7,6 +7,16 @@
 # http://blog.kaliloudiaby.com/index.php/terraform-to-provision-vpc-on-aws-amazon-web-services/
 # https://www.bogotobogo.com/DevOps/DevOps-Terraform.php
 
+terraform {
+  backend "s3" {
+    encrypt = true
+    bucket = "mongeese-footprints-terraform-state-storage-s3"
+    dynamodb_table = "dynamodb_terraform_state_lock"
+    region = "us-east-1"
+    key = "terraform-state/repository/footprints-provision"
+  }
+}
+
 provider "aws" {
   region = "us-east-1"
 }
