@@ -65,6 +65,6 @@ EOF
 
 cd ./../ansible
 
-ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ansible_hosts playbook.yml;
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts playbook.yml;
 
 echo "Visit the URL http://$blue_green_elb_domain to see the current active state of your application.";
