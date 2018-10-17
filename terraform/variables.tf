@@ -1,5 +1,6 @@
 variable "public_key_path" {
   type        = "string"
+  default     = "~/.ssh/mongeese-footprints.pub"
   description = <<EOF
 Path to the SSH public key to be used for authentication.
 Create this SSH keypair BEFORE provisioning or you will not be able to connect.
@@ -10,6 +11,7 @@ EOF
 
 variable "private_key_path" {
   type        = "string"
+  default     = "~/.ssh/mongeese-footprints"
   description = <<EOF
 Path to the SSH private key to be used for authentication.
 Create this SSH keypair BEFORE provisioning or you will not be able to connect.
