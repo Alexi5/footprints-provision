@@ -37,6 +37,14 @@ resource "aws_security_group" "blue_green_elb_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # HTTP access from anywhere
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   # Outbound internet access
   egress {
     from_port   = 0
@@ -107,6 +115,23 @@ resource "aws_lb_listener" "blue_green_elb_listener" {
   }
 
   load_balancer_arn = "${aws_lb.blue_green_elb.arn}"
-  port              = 80
-  protocol          = "HTTP"
+  port              = 443
+  protocol          = "HTTPS"
+  certificate_arn = "${data.aws_acm_certificate.footprints_production.arn}"
+  ssl_policy = "ELBSecurityPolicy-2016-08"
+}
+
+resource "aws_alb_listener" "https_lb_redirect" {
+  "default_action" {
+    type = "redirect"
+
+    redirect {
+      port = "443"
+      protocol = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+
+  load_balancer_arn = "${aws_lb.blue_green_elb.arn}"
+  port = 80
 }
