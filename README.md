@@ -24,7 +24,8 @@ following dependencies installed:
 - [Terraform](https://www.terraform.io/downloads.html)
 - [The AWS CLI tool](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-- [jq](https://stedolan.github.io/jq/) 
+- [jq](https://stedolan.github.io/jq/)
+- `ansible-galaxy install rvm.ruby`
 
 ## Getting Started
 
