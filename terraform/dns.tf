@@ -32,3 +32,16 @@ resource "aws_route53_record" "footprints_elb_www" {
     evaluate_target_health = true
   }
 }
+
+# Route requests to the staging elb
+resource "aws_route53_record" "staging_elb_www" {
+  zone_id = "${data.aws_route53_zone.footprints.zone_id}"
+  name    = "www.${data.aws_route53_zone.footprints.name}"
+  type    = "A"
+
+  alias {
+    name                   = "${aws_lb.staging_elb.dns_name}"
+    zone_id                = "${aws_lb.staging_elb.zone_id}"
+    evaluate_target_health = true
+  }
+}

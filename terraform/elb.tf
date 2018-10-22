@@ -16,6 +16,25 @@ resource "aws_lb" "blue_green_elb" {
   }
 }
 
+# Create ELB for staging instance
+resource "aws_lb" "staging_elb" {
+  name				 = "staging-elb"
+  internal			 = false
+  load_balancer_type = "application"
+  security_groups	 = ["${aws_security_group.blue_green_elb_security_group.id}"]
+  subnets			 = ["${aws_subnet.blue_subnet.id}",
+  						"${aws_subnet.green_subnet.id}"
+  ]
+  
+  idle_timeout		 = 400
+  
+  tags {
+    Name = "staging-elb"
+  }
+}
+
+# Security for the staging 
+
 # Provides security group configuration for the ELB itself (eg. internet access)
 resource "aws_security_group" "blue_green_elb_security_group" {
   name        = "blue_green_elb_security_group"
@@ -65,10 +84,11 @@ resource "aws_lb_target_group" "blue_elb_target_group" {
   }
 }
 
-# Attach the EC2 instance for the "blue" EC2 instance to the blue target group
+# Old: Attach the EC2 instance for the "blue" EC2 instance to the blue target group
+# Attach blue target group to the staging instance
 resource "aws_lb_target_group_attachment" "blue_elb_target_group_attachment" {
   target_group_arn = "${aws_lb_target_group.blue_elb_target_group.arn}"
-  target_id        = "${aws_instance.blue_ec2.id}"
+  target_id        = "${aws_lb.staging_elb.id}"
   port             = 80
 }
 
