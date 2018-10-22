@@ -32,7 +32,7 @@ blue_ec2_ip=$(terraform output blue_ec2_ip);
 
 green_ec2_ip=$(terraform output green_ec2_ip);
 
-blue_green_elb_domain=$(terraform output blue_green_elb_domain);
+production_elb_domain=$(terraform output production_elb_domain);
 
 # Export the database credentials for placing in the template for db config
 database_host=$(terraform output footprints_db_host);
@@ -67,4 +67,4 @@ cd ./../ansible
 
 ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts playbook.yml;
 
-echo "Visit the URL http://$blue_green_elb_domain to see the current active state of your application.";
+echo "Visit the URL http://$production_elb_domain to see the current active state of your application.";

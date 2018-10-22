@@ -6,7 +6,7 @@ function get_current_target_group()
 {
     cd ./terraform;
 
-    load_balancer_arn=$(terraform output blue_green_elb_arn);
+    load_balancer_arn=$(terraform output production_elb_arn);
 
     aws elbv2 describe-listeners --load-balancer-arn "$load_balancer_arn" \
         | jq -r '.Listeners[0].DefaultActions[0].TargetGroupArn'

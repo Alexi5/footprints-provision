@@ -14,8 +14,8 @@ resource "aws_route53_record" "footprints_elb_root" {
   type    = "A"
 
   alias {
-    name                   = "${aws_lb.blue_green_elb.dns_name}"
-    zone_id                = "${aws_lb.blue_green_elb.zone_id}"
+    name                   = "${aws_lb.production_elb.dns_name}"
+    zone_id                = "${aws_lb.production_elb.zone_id}"
     evaluate_target_health = true
   }
 }
@@ -27,8 +27,8 @@ resource "aws_route53_record" "footprints_elb_www" {
   type    = "A"
 
   alias {
-    name                   = "${aws_lb.blue_green_elb.dns_name}"
-    zone_id                = "${aws_lb.blue_green_elb.zone_id}"
+    name                   = "${aws_lb.production_elb.dns_name}"
+    zone_id                = "${aws_lb.production_elb.zone_id}"
     evaluate_target_health = true
   }
 }

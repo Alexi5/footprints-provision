@@ -23,6 +23,6 @@ provider "aws" {
 
 # Set up the public SSH key we should use for interacting with the EC2 instances
 resource "aws_key_pair" "auth" {
-  key_name   = "blue_green_key_pair"
+  key_name   = "production_and_staging_key_pair"
   public_key = "${file(var.public_key_path)}"
 }
