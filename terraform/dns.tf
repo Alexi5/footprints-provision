@@ -34,9 +34,9 @@ resource "aws_route53_record" "footprints_elb_www" {
 }
 
 # Route requests to the staging elb
-resource "aws_route53_record" "staging_elb_www" {
+resource "aws_route53_record" "staging_elb_staging" {
   zone_id = "${data.aws_route53_zone.footprints.zone_id}"
-  name    = "www.${data.aws_route53_zone.footprints.name}"
+  name    = "staging.${data.aws_route53_zone.footprints.name}"
   type    = "A"
 
   alias {

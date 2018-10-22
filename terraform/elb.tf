@@ -22,12 +22,13 @@ resource "aws_lb" "staging_elb" {
   internal			 = false
   load_balancer_type = "application"
   security_groups	 = ["${aws_security_group.blue_green_elb_security_group.id}"]
-  subnets			 = ["${aws_subnet.blue_subnet.id}",
-  						"${aws_subnet.green_subnet.id}"
+  subnets			 = [
+    "${aws_subnet.blue_subnet.id}",
+    "${aws_subnet.green_subnet.id}"
   ]
-  
+
   idle_timeout		 = 400
-  
+
   tags {
     Name = "staging-elb"
   }
@@ -96,7 +97,7 @@ resource "aws_lb_target_group" "blue_elb_target_group" {
 # Attach blue target group to the staging instance
 resource "aws_lb_target_group_attachment" "blue_elb_target_group_attachment" {
   target_group_arn = "${aws_lb_target_group.blue_elb_target_group.arn}"
-  target_id        = "${aws_lb.staging_elb.id}"
+  target_id        = "${aws_instance.blue_ec2.id}"
   port             = 80
 }
 
@@ -126,7 +127,7 @@ resource "aws_lb_target_group_attachment" "green_elb_target_group_attachment" {
   port             = 80
 }
 
-# Initially configure our load balancer to forward HTTP requests on port 80 to
+# Initially configure our load balancer to forward HTTPS requests on port 443 to
 # the "green" target group (and thus the "green" EC2)
 resource "aws_lb_listener" "blue_green_elb_listener" {
   "default_action" {
@@ -141,7 +142,23 @@ resource "aws_lb_listener" "blue_green_elb_listener" {
   ssl_policy = "ELBSecurityPolicy-2016-08"
 }
 
-resource "aws_alb_listener" "https_lb_redirect" {
+# And configure our staging load balancer to forward HTTPS requests on port 443 to
+# the "green" target group (and thus the "green" EC2)
+resource "aws_lb_listener" "staging_elb_listener" {
+  "default_action" {
+    type = "forward"
+    target_group_arn = "${aws_lb_target_group.blue_elb_target_group.arn}"
+  }
+
+  load_balancer_arn = "${aws_lb.staging_elb.arn}"
+  port              = 443
+  protocol          = "HTTPS"
+  certificate_arn = "${data.aws_acm_certificate.footprints_production.arn}"
+  ssl_policy = "ELBSecurityPolicy-2016-08"
+}
+
+# Force all non-port 443 traffic (meaning HTTP) to redirect to that port
+resource "aws_alb_listener" "https_blue_green_lb_redirect" {
   "default_action" {
     type = "redirect"
 
@@ -153,5 +170,20 @@ resource "aws_alb_listener" "https_lb_redirect" {
   }
 
   load_balancer_arn = "${aws_lb.blue_green_elb.arn}"
+  port = 80
+}
+
+resource "aws_alb_listener" "https_staging_lb_redirect" {
+  "default_action" {
+    type = "redirect"
+
+    redirect {
+      port = "443"
+      protocol = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+
+  load_balancer_arn = "${aws_lb.staging_elb.arn}"
   port = 80
 }
