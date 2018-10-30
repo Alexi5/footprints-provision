@@ -10,7 +10,7 @@
     - nginx
     - mysql
     - vim
-    - { role: rvm_io.ruby,
+    - { role: rvm.ruby,
         tags: ruby,
         become: yes,
 

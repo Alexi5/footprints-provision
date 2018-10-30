@@ -36,7 +36,7 @@ resource "aws_db_instance" "footprints" {
 
 resource "aws_security_group" "footprints_db_security_group" {
   name   = "footprints_db_security_group"
-  vpc_id = "${aws_vpc.blue_green_vpc.id}"
+  vpc_id = "${aws_vpc.production_and_staging_vpc.id}"
 
   # MySQL access from the EC2 subnets
   ingress {

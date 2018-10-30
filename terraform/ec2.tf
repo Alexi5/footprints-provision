@@ -53,7 +53,7 @@ resource "aws_instance" "green_ec2" {
 # Provides security group configuration for EC2 instances (eg. SSH and HTTP)
 resource "aws_security_group" "blue_green_instance_security_group" {
   name        = "blue_green_instance_security_group"
-  vpc_id      = "${aws_vpc.blue_green_vpc.id}"
+  vpc_id      = "${aws_vpc.production_and_staging_vpc.id}"
 
   # SSH access from anywhere
   ingress {
@@ -76,7 +76,7 @@ resource "aws_security_group" "blue_green_instance_security_group" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["${aws_vpc.blue_green_vpc.cidr_block}"]
+    cidr_blocks = ["${aws_vpc.production_and_staging_vpc.cidr_block}"]
   }
 
   # Outbound internet access
@@ -91,7 +91,7 @@ resource "aws_security_group" "blue_green_instance_security_group" {
 # Create the subnet for the "blue" EC2
 resource "aws_subnet" "blue_subnet" {
   availability_zone       = "us-east-1b"
-  vpc_id                  = "${aws_vpc.blue_green_vpc.id}"
+  vpc_id                  = "${aws_vpc.production_and_staging_vpc.id}"
   cidr_block              = "10.0.1.0/24"
 
   # Make sure EC2 instances added to this subnet get public IP addresses
@@ -105,7 +105,7 @@ resource "aws_subnet" "blue_subnet" {
 # Create the subnet for the "green" EC2
 resource "aws_subnet" "green_subnet" {
   availability_zone       = "us-east-1a"
-  vpc_id                  = "${aws_vpc.blue_green_vpc.id}"
+  vpc_id                  = "${aws_vpc.production_and_staging_vpc.id}"
   cidr_block              = "10.0.2.0/24"
 
   # Make sure EC2 instances added to this subnet get public IP addresses

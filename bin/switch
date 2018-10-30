@@ -36,9 +36,9 @@ The $active_target_group group is active! Switching to the $new_target_group gro
 
 	cd terraform;
 
-	blue_green_elb_domain=$(terraform output blue_green_elb_domain);
+	production_elb_domain=$(terraform output production_elb_domain);
 
-	echo "Visit the URL http://$blue_green_elb_domain to see the current active sate of your application.";
+	echo "Visit the URL http://$production_elb_domain to see the current active sate of your application.";
 }
 
 switch
