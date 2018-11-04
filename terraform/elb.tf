@@ -1,6 +1,6 @@
 # Create our Elastic Load Balancer
 resource "aws_lb" "production_elb" {
-  name                = "blue-green-elb"
+  name                = "production-elb"
   internal            = false
   load_balancer_type  = "application"
   security_groups     = ["${aws_security_group.production_and_staging_elb_security_group.id}"]
@@ -77,7 +77,7 @@ resource "aws_security_group" "production_and_staging_elb_security_group" {
 # Create an ELB target group so the load balancer can send requests to one (or
 # many) instances associated with the group
 resource "aws_lb_target_group" "staging_elb_target_group" {
-  name        = "blue-ec2-elb-target-group"
+  name        = "staging-ec2-elb-target-group"
   port        = 80
   protocol    = "HTTP"
   target_type = "instance"
