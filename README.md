@@ -50,19 +50,11 @@ Once AWS is fully provisioned by Terraform, and Ansible has completed its script
 to provision the EC2 hosts that will serve the Footprints app, there is one more
 process to complete to deploy the application for the first time.
 
-To deploy the Footprints app to the "green" EC2 instance, update the `.cap_env`
+To deploy the Footprints app to the "blue" EC2 instance (meaning staging), update the `.cap_env`
 file to point to the IP address for the target EC2:
 
 ```bash
-cd terraform
-
-# Output the "green" EC2 instance's public IP address
-echo $(terraform output green_ec2_ip) # This should echo the public IP of the EC2
-
 cd /path/to/footprints-public
-
-# Edit the `.cap_env` file so that it points to the "green" EC2 instance
-vim .cap_env
 
 # Load the `.cap_env` file's contents into your bash session's memory
 source .cap_env
@@ -71,16 +63,8 @@ source .cap_env
 RUN_MIGRATIONS=1 cap production deploy
 ```
 
-If you want to also make sure the "blue" EC2 is deployed to in the same way,
-repeat the above instructions, but use the "blue" EC2's public ip instead:
-
-```bash
-cd /path/to/footprints_provision/terraform
-
-# Get the "blue" EC2's IP address and replace it in your `.cap_env`, then repeat
-# the rest of the deployment instructions
-echo $(terraform output blue_ec2_ip)
-```
+Next, switch which instance is "production" by following the below instructions on switching
+from green to blue. Rerun the above commands. Then run the switch again.
 
 ## Changing from "green" to "blue"
 

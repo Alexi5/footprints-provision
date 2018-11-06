@@ -23,6 +23,16 @@ output "production_elb_name" {
   value = "${aws_lb.production_elb.name}"
 }
 
+# Output the ARN of the load balancer
+output "staging_elb_arn" {
+  value = "${aws_lb.staging_elb.arn}"
+}
+
+# Output the name of the load balancer
+output "staging_elb_name" {
+  value = "${aws_lb.staging_elb.name}"
+}
+
 # Output the ARN of the "blue" ELB target group
 output "blue_target_group_arn" {
   value = "${aws_lb_target_group.staging_elb_target_group.arn}"
