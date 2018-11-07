@@ -10,7 +10,7 @@
 terraform {
   backend "s3" {
     encrypt = true
-    bucket = "mongeese-footprints-terraform-state-storage-s3"
+    bucket = "mongeeses-terraform-state-storage-s3"
     dynamodb_table = "dynamodb_terraform_state_lock"
     region = "us-east-1"
     key = "terraform-state/repository/footprints-provision"

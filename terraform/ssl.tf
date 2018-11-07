@@ -2,6 +2,6 @@
 # *.mongoose-footprints.com. Terraform cannot manage
 # the cert directly, but can look it up for reference.
 data "aws_acm_certificate" "footprints_production" {
-  domain   = "*.mongoose-footprints.com"
+  domain   = "mongeeses.com"
   statuses = ["ISSUED"]
 }

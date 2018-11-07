@@ -34,8 +34,9 @@
 
 - name: Add the database configuration
   template: src=database.yml.j2 dest=/var/www/footprints/shared/config/database.yml
-  notify: restart nginx
 
 - name: Add the mailer configuration
   template: src=mailer.yml.j2 dest=/var/www/footprints/shared/config/mailer.yml
-  notify: restart nginx
+
+- name: Add the omniauth configuration
+  template: src=omniauth.yml.j2 dest=/var/www/footprints/shared/config/omniauth.yml

@@ -3,7 +3,7 @@
 # The DNS record for `mongoose-footprints.com` doesn't need to be managed by
 # Terraform, but we can fetch info about it using the `data` directive
 data "aws_route53_zone" "footprints" {
-  name         = "mongoose-footprints.com."
+  name         = "mongeeses.com."
   private_zone = false
 }
 

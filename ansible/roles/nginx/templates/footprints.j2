@@ -2,7 +2,7 @@ upstream footprints { server unix:/var/www/footprints/current/tmp/sockets/unicor
 
 server {
   listen *:80;
-  server_name staging.mongoose-footprints.com;
+  server_name staging.mongeeses.com;
   root /var/www/footprints/current/public;
 
   proxy_set_header X-Real-IP  $remote_addr;
@@ -19,13 +19,13 @@ server {
 }
 
 server {
-  server_name mongoose-footprints.com;
-  rewrite ^(.*) https://www.mongoose-footprints.com$1 permanent;
+  server_name mongeeses.com;
+  rewrite ^(.*) https://www.mongeeses.com$1 permanent;
 }
 
 server {
   listen *:80;
-  server_name www.mongoose-footprints.com;
+  server_name www.mongeeses.com;
   root /var/www/footprints/current/public;
 
   proxy_set_header X-Real-IP  $remote_addr;
