@@ -97,7 +97,7 @@ resource "aws_lb_target_group" "staging_elb_target_group" {
 # Attach blue target group to the staging instance
 resource "aws_lb_target_group_attachment" "staging_elb_target_group_attachment" {
   target_group_arn = "${aws_lb_target_group.staging_elb_target_group.arn}"
-  target_id        = "${aws_instance.blue_ec2.id}"
+  target_id        = "${var.staging_ec2_id}"
   port             = 80
 }
 
@@ -123,7 +123,7 @@ resource "aws_lb_target_group" "production_elb_target_group" {
 # Attach the EC2 instance for the "green" EC2 instance to the green target group
 resource "aws_lb_target_group_attachment" "production_elb_target_group_attachment" {
   target_group_arn = "${aws_lb_target_group.production_elb_target_group.arn}"
-  target_id        = "${aws_instance.green_ec2.id}"
+  target_id        = "${var.production_ec2_id}"
   port             = 80
 }
 

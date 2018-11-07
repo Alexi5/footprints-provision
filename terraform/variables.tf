@@ -37,3 +37,13 @@ Whatever you specify here will be passed to Ansible in order to populate the
 Rails database.yml config file when provisioning the EC2 instances.
 EOF
 }
+
+variable "staging_ec2_id" {
+  type = "string"
+  description = "The EC2 Instance connected to staging ELB."
+}
+
+variable "production_ec2_id" {
+  type = "string"
+  description = "The EC2 instance connected to production ELB."
+}

@@ -62,3 +62,11 @@ output "footprints_db_user" {
 output "footprints_db_pass" {
   value = "${aws_db_instance.footprints.password}"
 }
+
+output "staging_elb_target_group_attachment" {
+  value = "${aws_lb_target_group_attachment.staging_elb_target_group_attachment.target_id}"
+}
+
+output "production_elb_target_group_attachment" {
+  value = "${aws_lb_target_group_attachment.production_elb_target_group_attachment.target_id}"
+}
