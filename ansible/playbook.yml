@@ -3,6 +3,8 @@
   hosts: all
   remote_user: ubuntu
   become: yes
+  vars_files:
+    - group_vars/geerlingguy_filebeat/filebeat.yml
 
   roles:
     - common
@@ -10,6 +12,7 @@
     - nginx
     - mysql
     - vim
+    - geerlingguy.filebeat
     - { role: rvm.ruby,
         tags: ruby,
         become: yes,
