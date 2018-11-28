@@ -28,19 +28,22 @@ cd terraform;
 
 terraform init;
 
+export TF_VAR_staging_ec2_id=$(terraform output staging_elb_target_group_attachment)
+export TF_VAR_production_ec2_id=$(terraform output production_elb_target_group_attachment)
+
 terraform apply;
 
 blue_ec2_ip=$(terraform output blue_ec2_ip);
 
-green_ec2_ip=$(terraform output green_ec2_ip);
+green_ec2_ip=$(terraform output green_ec2_ip)
 
-production_elb_domain=$(terraform output production_elb_domain);
+production_elb_domain=$(terraform output production_elb_domain)
 
 # Export the database credentials for placing in the template for db config
-database_host=$(terraform output footprints_db_host);
-database_name=$(terraform output footprints_db_name);
-database_user=$(terraform output footprints_db_user);
-database_pass=$(terraform output footprints_db_pass);
+database_host=$(terraform output footprints_db_host)
+database_name=$(terraform output footprints_db_name)
+database_user=$(terraform output footprints_db_user)
+database_pass=$(terraform output footprints_db_pass)
 
 # Set up the Ansible hosts file to point to the EC2 instances created by
 # the Terraform script
@@ -69,6 +72,6 @@ EOF
 
 cd ./../ansible
 
-ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts playbook.yml;
+# ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts playbook.yml;
 
-echo "Visit the URL http://$production_elb_domain to see the current active state of your application.";
+echo "Visit the URL http://$production_elb_domain to see the current active state of your application."
