@@ -1,0 +1,8 @@
+  filebeat_prospectors:
+    - input_type: log
+      paths:
+        - "/var/www/footprints/shared/log/*.log"
+
+  filebeat_output_logstash_enabled: true
+  filebeat_output_logstash_hosts:
+  - "localhost:5044"
