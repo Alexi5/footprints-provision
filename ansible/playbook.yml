@@ -1,6 +1,6 @@
 ---
-- name: deployer user, UFW, NTP, Vim, MySQL, Ruby, and Nginx
-  hosts: all
+- name: Webservers
+  hosts: webservers
   remote_user: ubuntu
   become: yes
   vars_files:
@@ -13,7 +13,8 @@
     - mysql
     - vim
     - geerlingguy.filebeat
-    - { role: rvm.ruby,
+    - {
+        role: rvm.ruby,
         tags: ruby,
         become: yes,
 
@@ -22,3 +23,12 @@
         rvm1_install_path: /usr/local/rvm,     # Set to system location
         rvm1_user: root                        # Need root account to access system location
     }
+
+- name: Vault
+  hosts: vault
+  remote_user: ubuntu
+  become: yes
+
+  roles:
+    - common
+    - vault

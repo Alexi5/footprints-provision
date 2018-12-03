@@ -1,0 +1,10 @@
+ui = true
+
+listener "tcp" {
+  address     = "{{ vault_host }}:8200"
+  tls_disable = 1
+}
+
+storage "file" {
+  path = "/mnt/vault/data"
+}

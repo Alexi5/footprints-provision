@@ -28,6 +28,12 @@
     port: 443
     proto: tcp
 
+- name: Allow Vault web traffic through ufw
+  ufw:
+    rule: allow
+    port: 8200
+    proto: tcp
+
 - name: Install ntp
   apt: name=ntp state=present
   tags: ntp

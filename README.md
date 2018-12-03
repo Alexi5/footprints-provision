@@ -26,6 +26,7 @@ following dependencies installed:
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - [jq](https://stedolan.github.io/jq/)
 - `ansible-galaxy install rvm.ruby`
+- `ansible-galaxy install geerlingguy.filebeat`
 
 ## Getting Started
 

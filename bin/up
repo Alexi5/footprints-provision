@@ -34,10 +34,11 @@ export TF_VAR_production_ec2_id=$(terraform output production_elb_target_group_a
 terraform apply;
 
 blue_ec2_ip=$(terraform output blue_ec2_ip);
+green_ec2_ip=$(terraform output green_ec2_ip);
+vault_ec2_ip=$(terraform output vault_ec2_ip);
 
-green_ec2_ip=$(terraform output green_ec2_ip)
-
-production_elb_domain=$(terraform output production_elb_domain)
+production_elb_domain=$(terraform output production_elb_domain);
+vault_host=$(terraform output vault_ec2_host);
 
 # Export the database credentials for placing in the template for db config
 database_host=$(terraform output footprints_db_host)
@@ -56,22 +57,21 @@ all:
     database_pass: $database_pass
     omniauth_client_id: $OMNIAUTH_CLIENT_ID
     omniauth_client_secret: $OMNIAUTH_CLIENT_SECRET
+    vault_host: $vault_host
 
-blue:
+webservers:
   hosts:
     $blue_ec2_ip:
-  vars:
-    color: blue
-
-green:
-  hosts:
     $green_ec2_ip:
-  vars:
-    color: green
+
+vault:
+  hosts:
+    $vault_ec2_ip
+
 EOF
 
 cd ./../ansible
 
-# ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts playbook.yml;
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts playbook.yml;
 
 echo "Visit the URL http://$production_elb_domain to see the current active state of your application."

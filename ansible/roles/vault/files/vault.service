@@ -1,0 +1,18 @@
+[Unit]
+Description=Vault Service
+
+[Service]
+User=vault
+# The configuration file application.properties should be here:
+#change this to your workspace
+WorkingDirectory=/home/vault
+#path to executable.
+#executable is a bash script which calls jar file
+ExecStart=/home/vault/start
+SuccessExitStatus=0
+TimeoutStopSec=10
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

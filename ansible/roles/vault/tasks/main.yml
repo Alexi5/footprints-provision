@@ -1,0 +1,68 @@
+---
+
+- name: "Add Vault user"
+  user:
+    name: "vault"
+    comment: "Vault user"
+    system: true
+
+- name: Add vault service file
+  copy:
+    src: vault.service
+    dest: /etc/systemd/system/vault.service
+
+- name: Add vault executable
+  copy:
+    src: start
+    dest: /home/vault
+    owner: vault
+    mode: a+x
+
+- name: Create Directories
+  file:
+    dest: "{{ item }}"
+    state: directory
+    owner: "vault"
+  with_items:
+    - "/etc/vault.d"
+    - "/tmp/vault"
+    - "/mnt/vault/data"
+
+- name: Check Vault installation
+  command: which vault
+  register: vault_installation
+  changed_when: false
+  ignore_errors: true
+  check_mode: false
+
+- name: Get installed Vault version
+  shell: "{{ vault_installation.stdout }} -version | cut -d' ' -f2 | tr -d 'v'"
+  when: not vault_installation is failed
+  changed_when: false
+  check_mode: false
+  register: installed_vault_version
+
+- name: Compute if installation is required
+  set_fact:
+    installation_required: "{{ vault_installation is failed or installed_vault_version.stdout != '0.11.5' }}"
+
+- name: Install OS packages and Vault via remote hosts
+  include: install_remote.yml
+  when:
+    - installation_required | bool
+
+- name: Add vault config file
+  template: src=vault_main.hcl.j2 dest=/etc/vault.d/vault_main.hcl
+
+- name: Check Vault mlock capability
+  command: "setcap -v cap_ipc_lock=+ep /usr/local/bin/vault"
+  changed_when: false  # read-only task
+  ignore_errors: true
+  register: vault_mlock_capability
+
+- name: Enable non root mlock capability
+  command: "setcap cap_ipc_lock=+ep /usr/local/bin/vault"
+  when: vault_mlock_capability is failed
+
+- name: Start Vault
+  systemd: state=restarted name=vault

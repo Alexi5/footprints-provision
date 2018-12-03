@@ -1,0 +1,3 @@
+#!/bin/sh
+
+vault server -config /etc/vault.d/vault_main.hcl
