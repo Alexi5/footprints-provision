@@ -75,3 +75,11 @@ output "staging_elb_target_group_attachment" {
 output "production_elb_target_group_attachment" {
   value = "${aws_lb_target_group_attachment.production_elb_target_group_attachment.target_id}"
 }
+
+output "omniauth_client_id" {
+  value = "${data.vault_generic_secret.omniauth.data["client_id"]}"
+}
+
+output "omniauth_client_secret" {
+  value = "${data.vault_generic_secret.omniauth.data["client_secret"]}"
+}

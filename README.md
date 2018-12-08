@@ -30,20 +30,9 @@ following dependencies installed:
 
 ## Getting Started
 
-<ol>
-<li>Make sure you have an RSA public/private keypair for SSH living at
-<code>~/.ssh/mongeese-footprints</code> (private), and <code>~/.ssh/mongeese-footprints.pub</code> (public).
-This keypair will be used by Ansible to provision the hosts.</li>
-<li>Set your AWS credentials in your environment, so that Terraform can make API calls to AWS on your behalf:
-
-```bash
-export AWS_ACCESS_KEY_ID=your-access-key-id-here
-export AWS_SECRET_ACCESS_KEY=your-secret-access-key-here
-```
-</li>
-
-<li>Run <code>bin/up</code> to provision the Footprints infrastructure to AWS.</li>
-</ol>
+Start by running `cp .env.example .env`. Once you've done that, add the correct values to each
+of the vars. Then, confirm that the Vault is unsealed by visiting the vault UI. Once both of these
+steps are complete, you're ready to provision our infra by running `bin/up`.
 
 ## After Provisioning AWS
 

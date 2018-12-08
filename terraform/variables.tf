@@ -20,24 +20,6 @@ Example: ~/.ssh/id_rsa
 EOF
 }
 
-variable "db_username" {
-  type = "string"
-  description = <<EOF
-The username for the Footprints production database.
-Whatever you specify here will be passed to Ansible in order to populate the
-Rails database.yml config file when provisioning the EC2 instances.
-EOF
-}
-
-variable "db_password" {
-  type = "string"
-  description = <<EOF
-The password for the Footprints production database.
-Whatever you specify here will be passed to Ansible in order to populate the
-Rails database.yml config file when provisioning the EC2 instances.
-EOF
-}
-
 variable "staging_ec2_id" {
   type = "string"
   description = "The EC2 Instance connected to staging ELB."
@@ -46,4 +28,12 @@ variable "staging_ec2_id" {
 variable "production_ec2_id" {
   type = "string"
   description = "The EC2 instance connected to production ELB."
+}
+
+data "vault_generic_secret" "db_credentials" {
+  path = "secret/production_db"
+}
+
+data "vault_generic_secret" "omniauth" {
+  path = "secret/omniauth"
 }

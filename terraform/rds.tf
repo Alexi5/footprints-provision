@@ -10,8 +10,8 @@ resource "aws_db_instance" "footprints" {
 
   # Hardcode the credentials for now; we'll need to make these dynamic once this
   # provisioning approach is verified
-  username             = "${var.db_username}"
-  password             = "${var.db_password}"
+  username             = "${data.vault_generic_secret.db_credentials.data["db_username"]}"
+  password             = "${data.vault_generic_secret.db_credentials.data["db_password"]}"
   parameter_group_name = "default.mysql5.7"
 
   # Attach the RDS instance to the Footprints db subnet group

@@ -45,6 +45,8 @@ database_host=$(terraform output footprints_db_host)
 database_name=$(terraform output footprints_db_name)
 database_user=$(terraform output footprints_db_user)
 database_pass=$(terraform output footprints_db_pass)
+omniauth_client_id=$(terraform output omniauth_client_id)
+omniauth_client_secret=$(terraform output omniauth_client_secret)
 
 # Set up the Ansible hosts file to point to the EC2 instances created by
 # the Terraform script
@@ -55,8 +57,8 @@ all:
     database_name: $database_name
     database_user: $database_user
     database_pass: $database_pass
-    omniauth_client_id: $OMNIAUTH_CLIENT_ID
-    omniauth_client_secret: $OMNIAUTH_CLIENT_SECRET
+    omniauth_client_id: $omniauth_client_id
+    omniauth_client_secret: $omniauth_client_secret
     vault_host: $vault_host
 
 webservers:
@@ -74,4 +76,4 @@ cd ./../ansible
 
 ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts playbook.yml;
 
-echo "Visit the URL http://$production_elb_domain to see the current active state of your application."
+rm ./../ansible/ansible_hosts
