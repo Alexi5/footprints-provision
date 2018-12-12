@@ -93,4 +93,4 @@ fi
 
 ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts elastic-and-logstash.yml;
 
-#rm ./../ansible/ansible_hosts
+rm ./../ansible/ansible_hosts

@@ -50,6 +50,13 @@ resource "aws_security_group" "logstash_and_elastic_sg" {
 		protocol = "tcp"
 		cidr_blocks = ["0.0.0.0/0"]
 	}
+
+	ingress {
+		from_port = 5601
+		to_port = 5601
+		protocol = "tcp"
+		cidr_blocks = ["0.0.0.0/0"]
+	}
 }
 
 output "logstash_and_elastic_ec2_host" {

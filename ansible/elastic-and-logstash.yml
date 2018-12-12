@@ -9,3 +9,5 @@
   roles:
     - geerlingguy.java
     - geerlingguy.logstash
+    - geerlingguy.elasticsearch
+    - geerlingguy.kibana

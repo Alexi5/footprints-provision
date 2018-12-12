@@ -1,3 +1,5 @@
 - src: geerlingguy.filebeat
 - src: geerlingguy.logstash
 - src: geerlingguy.java
+- src: geerlingguy.elasticsearch
+- src: geerlingguy.kibana
