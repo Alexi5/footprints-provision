@@ -8,11 +8,6 @@ output "green_ec2_ip" {
   value = "${aws_instance.green_ec2.public_ip}"
 }
 
-# Output the Elk public IP address
-output "logstash_and_elastic_ec2_ip" {
-  value = "${aws_instance.logstash_and_elastic_ec2.public_ip}"
-}
-
 # Output the domain name of the load balancer
 output "production_elb_domain" {
   value = "${aws_lb.production_elb.dns_name}"

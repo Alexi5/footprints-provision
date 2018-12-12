@@ -36,9 +36,11 @@ terraform apply;
 blue_ec2_ip=$(terraform output blue_ec2_ip);
 green_ec2_ip=$(terraform output green_ec2_ip);
 vault_ec2_ip=$(terraform output vault_ec2_ip);
+logstash_and_elastic_ec2_ip=$(terraform output logstash_and_elastic_ec2_ip);
 
 production_elb_domain=$(terraform output production_elb_domain);
 vault_host=$(terraform output vault_ec2_host);
+logstash_and_elastic_host=$(terraform output logstash_and_elastic_ec2_host);
 
 # Export the database credentials for placing in the template for db config
 database_host=$(terraform output footprints_db_host)
@@ -60,6 +62,7 @@ all:
     omniauth_client_id: $omniauth_client_id
     omniauth_client_secret: $omniauth_client_secret
     vault_host: $vault_host
+    logstash_and_elastic_host: $logstash_and_elastic_host
 
 webservers:
   hosts:
@@ -70,10 +73,24 @@ vault:
   hosts:
     $vault_ec2_ip
 
+elastic_and_logstash:
+  hosts:
+    $logstash_and_elastic_ec2_ip
+
 EOF
 
 cd ./../ansible
 
-ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts webservers.yml;
+export ANSIBLE_HOST_KEY_CHECKING=False;
 
-rm ./../ansible/ansible_hosts
+ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts webservers.yml;
+
+run_vault=${RUN_VAULT:-0}
+
+if [$run_vault == 1]; then
+    ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts vault.yml;
+fi
+
+ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts elastic-and-logstash.yml;
+
+#rm ./../ansible/ansible_hosts

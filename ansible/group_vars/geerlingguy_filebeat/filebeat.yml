@@ -5,4 +5,4 @@
 
   filebeat_output_logstash_enabled: true
   filebeat_output_logstash_hosts:
-  - "localhost:5044"
+  - "{{logstash_and_elastic_host}}:5044"

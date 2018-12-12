@@ -1,6 +1,6 @@
 ---
 - name: Elastic and Logstash
-  hosts: elk
+  hosts: elastic_and_logstash
   remote_user: ubuntu
   become: yes
   vars_files:
