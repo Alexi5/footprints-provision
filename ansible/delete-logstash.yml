@@ -1,0 +1,8 @@
+---
+- name: Delete Logstash
+  hosts: webservers
+  remote_user: ubuntu
+  become: yes
+  tasks:
+  - name: Uninstall Logstash from apt-get
+    command: "apt-get remove logstash -y"

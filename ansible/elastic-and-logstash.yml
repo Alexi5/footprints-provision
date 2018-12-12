@@ -1,0 +1,11 @@
+---
+- name: Elastic and Logstash
+  hosts: elk
+  remote_user: ubuntu
+  become: yes
+  vars_files:
+    - group_vars/geerlingguy_logstash/logstash.yml
+
+  roles:
+    - geerlingguy.java
+    - geerlingguy.logstash

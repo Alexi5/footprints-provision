@@ -74,6 +74,6 @@ EOF
 
 cd ./../ansible
 
-ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts playbook.yml;
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --private-key=~/.ssh/mongeese-footprints -i ansible_hosts webservers.yml;
 
 rm ./../ansible/ansible_hosts

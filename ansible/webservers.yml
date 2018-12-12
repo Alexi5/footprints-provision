@@ -21,14 +21,7 @@
         rvm1_rubies: ['ruby-2.1.5'],
         rvm1_install_flags: '--auto-dotfiles', # Remove --user-install from defaults
         rvm1_install_path: /usr/local/rvm,     # Set to system location
-        rvm1_user: root                        # Need root account to access system location
+        rvm1_user: root,                       # Need root account to access system location
+        rvm1_gpg_keys: None,
+        rvm1_rvm_check_for_updates: False
     }
-
-- name: Vault
-  hosts: vault
-  remote_user: ubuntu
-  become: yes
-
-  roles:
-    - common
-    - vault

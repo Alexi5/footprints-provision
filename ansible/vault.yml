@@ -1,0 +1,8 @@
+---
+- name: Vault
+  hosts: vault
+  remote_user: ubuntu
+  become: yes
+
+  roles:
+    - vault
