@@ -6,6 +6,16 @@
   vars_files:
     - group_vars/geerlingguy_logstash/logstash.yml
 
+  pre_tasks:
+    - name: Create Logstash filter.
+      copy:
+        src: "13-footprints.conf"
+        dest: "/etc/logstash/conf.d/13-footprints.conf"
+        owner: root
+        group: root
+        mode: 0644
+      notify: restart logstash
+
   roles:
     - geerlingguy.java
     - geerlingguy.logstash

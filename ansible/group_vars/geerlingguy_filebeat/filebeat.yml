@@ -1,7 +1,7 @@
   filebeat_prospectors:
     - input_type: log
       paths:
-        - "/var/www/footprints/shared/log/*.log"
+        - "/var/www/footprints/shared/log/production.log"
 
   filebeat_output_logstash_enabled: true
   filebeat_output_logstash_hosts:
